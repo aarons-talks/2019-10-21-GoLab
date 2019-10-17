@@ -18,7 +18,7 @@ The cool thing is that the whole codebase is modules-aware. That means it has a 
 
 # Run The Demo
 
-Below is how how to do the demo yourself. The instructions are for Linux/Mac OS X systems.
+Below is how how to do the demo yourself. The instructions are for Linux/Mac OS X systems, and I'm assuming you have Go 1.13 
 
 ## First Way: Build With Athens and an Upstream VCS
 
@@ -31,7 +31,7 @@ We try hard to make it easy to run your own Athens. See [here](https://docs.gomo
 First, run this to start Athens up:
 
 ```console
-$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 gomods/athens:v0.5.0
+$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 gomods/athens:v0.7.0
 ```
 
 Next, open a new terminal window and set your `GOPROXY` environment variable to tell modules to use the local server:
@@ -46,10 +46,10 @@ Also, the Go tool keeps a read-only on-disk cache of every module version you've
 $ sudo rm -rf $(go env GOPATH)/pkg/mod
 ```
 
-And then build and run the server!
+And then build and run the server, with verbosity turned on so you can see what's going on!
 
 ```console
-$ go run .
+$ go run -v -x .
 ```
 
 >After your app is up and running, you can go to http://localhost:3000/catalog to see all the modules that Athens has downloaded into its storage.
@@ -66,15 +66,16 @@ First, run Athens with the disk driver, and mount the module database into the D
 
 ```console
 $ export ATHENS_ARCHIVE="$PWD/athens-archive"
-$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.5.0
+$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.7.0
 ```
 
 >Set `ATHENS_ARCHIVE` to wherever your archive lives. If, for example, it is on a USB key, set it to `/Volumes/MyKey` (this is where it would most likely live on a Mac)
 
-Next, in a new terminal, clear out your cache again:
+Next, in a new terminal, clear out your cache and built binary:
 
 ```console
 $ sudo rm -rf $(go env GOPATH)/pkg/mod
+$ rm ./2019-10-21-GoLab
 ```
 
 And then, **shut down your internet connection** :see_no_evil:.
@@ -84,7 +85,7 @@ And then, **shut down your internet connection** :see_no_evil:.
 And finally, run the app again!
 
 ```console
-$ go run .
+$ go run -v -x .
 ```
 
 >Notice how much faster the build is this time, compared the the previous demo. That's because Athens isn't downloading anything - it's just streaming data directly from disk to the client!
