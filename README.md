@@ -71,11 +71,10 @@ $ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e AT
 
 >Set `ATHENS_ARCHIVE` to wherever your archive lives. If, for example, it is on a USB key, set it to `/Volumes/MyKey` (this is where it would most likely live on a Mac)
 
-Next, in a new terminal, clear out your cache and built binary:
+Next, in a new terminal, clear out your cache again:
 
 ```console
 $ sudo rm -rf $(go env GOPATH)/pkg/mod
-$ rm ./2019-10-21-GoLab
 ```
 
 And then, **shut down your internet connection** :see_no_evil:.
