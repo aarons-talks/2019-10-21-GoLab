@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/gobuffalo/plush"
 )
 
-func kittyHandler(c *gin.Context) {
+func kittyHandler(tpl string) func(*gin.Context) {
 	cats := []string{
 		"/img/kitties/1.jpg",
 		"/img/kitties/2.jpg",
@@ -16,16 +14,14 @@ func kittyHandler(c *gin.Context) {
 		"/img/kitties/5.jpg",
 		"/img/kitties/6.jpg",
 	}
-	htmlStr := fmt.Sprintf(`<html>
-	<head></head>
-	<body>
-	<center>
-	<img src="%s" width="1000"/>
-	</center>
-	</body>
-	</html>`, randStr(cats))
-	c.Writer.Header().Set("Content-Type", "text/html")
-	c.Writer.WriteHeader(http.StatusOK)
-	c.Writer.WriteHeader(http.StatusOK)
-	c.Writer.Write([]byte(htmlStr))
+	return func(c *gin.Context) {
+		ctx := plush.NewContext()
+		ctx.Set("imgSrc", randStr(cats))
+		str, err := plush.Render(tpl, ctx)
+		if err != nil {
+			c.String(500, "Error rendering template: %s", err)
+			return
+		}
+		renderHTML(c, str)
+	}
 }
