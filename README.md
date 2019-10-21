@@ -99,7 +99,7 @@ These commands will set up Athens with disk storage and an empty volume:
 
 ```console
 $ mkdir $ATHENS_ARCHIVE
-$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.5.0
+$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.7.0
 ```
 
 After you run them, set `GOPROXY` and do a `go run` like we did in the previous demos, and the disk archive will be at `$ATHENS_ARCHIVE`.
