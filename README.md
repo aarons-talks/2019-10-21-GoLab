@@ -31,7 +31,7 @@ We try hard to make it easy to run your own Athens. See [here](https://docs.gomo
 First, run this to start Athens up:
 
 ```console
-$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 gomods/athens:v0.7.0
+$ docker run --rm -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 gomods/athens:v0.7.0
 ```
 
 Next, open a new terminal window and set your `GOPROXY` environment variable to tell modules to use the local server:
@@ -66,7 +66,7 @@ First, run Athens with the disk driver, and mount the module database into the D
 
 ```console
 $ export ATHENS_ARCHIVE="$PWD/athens-archive"
-$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.7.0
+$ docker run --rm -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.7.0
 ```
 
 >Set `ATHENS_ARCHIVE` to wherever your archive lives. If, for example, it is on a USB key, set it to `/Volumes/MyKey` (this is where it would most likely live on a Mac)
